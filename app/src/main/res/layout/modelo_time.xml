@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listaTimes_nome_time"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:textSize="26dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listaTimes_nome_jogador"
+        android:textSize="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/listaTimes_nome_time"/>
+
+</RelativeLayout>
