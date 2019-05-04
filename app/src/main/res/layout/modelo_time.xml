@@ -9,6 +9,7 @@
         android:id="@+id/listaTimes_nome_time"
         android:layout_alignParentTop="true"
         android:gravity="center"
+        android:text="Nome do time"
         android:textSize="26dp"
         android:textStyle="bold"/>
 
@@ -16,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listaTimes_nome_jogador"
+        android:text="lista de joagdores"
         android:textSize="18dp"
         android:layout_marginLeft="10dp"
         android:layout_below="@+id/listaTimes_nome_time"/>

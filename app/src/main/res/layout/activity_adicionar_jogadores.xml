@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,36 +7,35 @@
     tools:context=".AdicionarJogadoresActivity">
 
     <EditText
+        android:id="@+id/add_jogador_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add_jogador_nome"
         android:layout_alignParentTop="true"
         android:hint="Nome"
-        android:inputType="textCapSentences"
         android:importantForAutofill="yes"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_jogador_btn"
-        android:text="Adicionar"
-        android:layout_below="@id/add_jogador_nome"
-        android:layout_alignParentRight="true"/>
+        android:inputType="textCapSentences" />
 
     <ListView
+        android:id="@+id/add_list_jogadores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_jogador_btn"
-        android:id="@+id/add_list_jogadores"
-        android:layout_marginBottom="40dp"
-        />
+        android:layout_below="@id/add_jogador_nome"
+        android:layout_marginBottom="40dp" />
 
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/add_jogador_btn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/add_btn_sortear_times"
         android:layout_alignParentBottom="true"
-        android:text="Sortear"/>
+        android:layout_alignParentRight="true"
+        android:text="Adicionar" />
 
+    <Button
+        android:id="@+id/add_voltar_tela"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="voltar" />
 </RelativeLayout>

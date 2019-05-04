@@ -20,8 +20,8 @@ public class JogadorHelper {
                 campoNome = activity.findViewById(R.id.add_jogador_nome);
                 break;
             case ".ListaJogadoresActivity":
-                Toast.makeText(activity, ".ListaJogadoresActivity", Toast.LENGTH_SHORT);
-                campoIsSelected = ((CheckBox) activity.findViewById(R.id.modelo_jogador_chk)).isChecked();
+//                Toast.makeText(activity, ".ListaJogadoresActivity", Toast.LENGTH_SHORT);
+//                campoIsSelected = ((CheckBox) activity.findViewById(R.id.modelo_jogador_chk)).isChecked();
                 break;
         }
     }
@@ -29,7 +29,7 @@ public class JogadorHelper {
     public Jogador getJogador(){
         Jogador jogador = new Jogador();
         jogador.setNome(campoNome.getText().toString());
-       // jogador.setSelected(Boolean.valueOf(campoIsSelected.getText().toString()));
+        jogador.setSelected(campoIsSelected);
         return jogador;
     }
 

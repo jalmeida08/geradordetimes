@@ -7,9 +7,30 @@
     tools:context=".ListaJogadoresActivity">
 
     <ListView
+        android:id="@+id/lista_jogadores_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lista_jogadores_list"
-        />
+        android:layout_marginBottom="40dp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/list_btn_sortear_times"
+        android:layout_alignParentBottom="true"
+        android:text="Sortear"/>
+
+    <Button
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:text="+"
+        android:id="@+id/list_btn_add_jogador"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="16dp"
+        android:textColor="#FFF"
+        android:textSize="30dp"
+        android:elevation="6dp"
+        android:background="@drawable/fundo_btn_adicionar"/>
 
 </RelativeLayout>

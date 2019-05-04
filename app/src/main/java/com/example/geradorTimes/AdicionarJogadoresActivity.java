@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,10 +31,8 @@ public class AdicionarJogadoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adicionar_jogadores);
         botaoAdicionar();
-        botaoSortarTimes();
+        botaoVoltarTela();
         botaoOk();
-
-
     }
 
 
@@ -43,10 +42,8 @@ public class AdicionarJogadoresActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // JogadorHelper jh = new JogadorHelper(AdicionarJogadoresActivity.this);
-                //acaoBotao(jh);
-                Intent intent = new Intent(AdicionarJogadoresActivity.this, ListaJogadoresActivity.class);
-                startActivity(intent);
+                JogadorHelper jh = new JogadorHelper(AdicionarJogadoresActivity.this);
+                acaoBotao(jh);
             }
         });
     }
@@ -75,16 +72,9 @@ public class AdicionarJogadoresActivity extends AppCompatActivity {
     private void addJogadorList(List<Jogador> jogadores){
         ListView lst = findViewById(R.id.add_list_jogadores);
         Collections.reverse(jogadores);
-//        ArrayAdapter<Jogador> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jogadores);
-        JogadorAdapter listAdapter = new JogadorAdapter(this, R.layout.modelo_jogadores, jogadores);
+        ArrayAdapter<Jogador> listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, jogadores);
+//        JogadorAdapter listAdapter = new JogadorAdapter(this, R.layout.modelo_jogadores, jogadores);
         lst.setAdapter(listAdapter);
-    }
-
-    private Time recuperarTime(){
-        Intent it = getIntent();
-        Bundle extras = it.getExtras();
-        Time time = (Time) extras.get("qtdJogadores");
-        return time;
     }
 
     private boolean verificarCampo(Jogador jogador, List<Jogador> jogadores){
@@ -101,43 +91,15 @@ public class AdicionarJogadoresActivity extends AppCompatActivity {
         return false;
     }
 
-    private void botaoSortarTimes(){
-        final Button btn = findViewById(R.id.add_btn_sortear_times);
+    private void botaoVoltarTela(){
+        final Button btn = findViewById(R.id.add_voltar_tela);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sortearTimes(AdicionarJogadoresActivity.this.jogadores);
-                finishActivity(R.layout.activity_main);
+                Intent intent = new Intent(AdicionarJogadoresActivity.this, ListaJogadoresActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
-    }
-
-    private void sortearTimes(List<Jogador> jogadors){
-        Collections.shuffle(jogadors);
-        Time time = recuperarTime();
-        List<Time> times = new ArrayList<Time>();
-        Integer qtdJogadoresTime = Integer.parseInt(time.getQtdJogadorTime());
-        int increment = 0;
-        for (int i = 0; i < Math.ceil(Double.valueOf(jogadors.size()) / Double.valueOf(qtdJogadoresTime)); i++) {
-            List<Jogador> listaJogadores = new ArrayList<Jogador>();
-            time = new Time();
-            time.setQtdJogadorTime(qtdJogadoresTime.toString());
-            for(int j = 0; j < qtdJogadoresTime; j++){
-                if((increment+1) > jogadors.size())
-                    break;
-                listaJogadores.add(jogadors.get(increment));
-                increment++;
-            }
-            time.setJogador(listaJogadores);
-            time.setNomeTime(String.valueOf(i+1));
-            times.add(time);
-        }
-        if(times.size() < 2){
-            Toast.makeText(this, "Quantidade de jogadores insuficiente  para formar times", Toast.LENGTH_LONG).show();
-        }else{
-            Intent intentTimes = new Intent(this, TimesActivity.class);
-            intentTimes.putExtra("listaTimes", (Serializable) times);
-            startActivity(intentTimes);
-        }
     }
 }

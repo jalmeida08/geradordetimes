@@ -3,10 +3,12 @@ package com.example.geradorTimes.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.geradorTimes.R;
@@ -27,6 +29,8 @@ public class JogadorAdapter extends ArrayAdapter<Jogador>{
         this.context = context;
     }
 
+
+
     @Override
     public Jogador getItem(int position) {
         return jogadores.get(position);
@@ -40,11 +44,25 @@ public class JogadorAdapter extends ArrayAdapter<Jogador>{
             v = inflater.inflate(R.layout.modelo_jogadores, null);
         }
 
-       Jogador jogador = jogadores.get(position);
+       final Jogador jogador = jogadores.get(position);
 
         if(jogador != null){
            TextView campoNome = v.findViewById(R.id.modelo_jogador_nome_jogador);
-           campoNome.setText(jogador.toString());
+            final CheckBox campoChk = ((CheckBox) v.findViewById(R.id.modelo_jogador_chk));
+
+            campoChk.setTag(jogador);
+
+            campoNome.setText(jogador.toString());
+            campoChk.setChecked(jogador.isSelected());
+
+            campoChk.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CheckBox cehck = (CheckBox) v;
+                    Jogador jogador = (Jogador) cehck.getTag();
+                    jogador.setSelected(campoChk.isChecked());
+                }
+            });
         }
         return v;
     }
