@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,8 +58,16 @@ public class ListaJogadoresActivity extends AppCompatActivity {
         jogadores = dao.listarJogadores();
         dao.close();
         lst = findViewById(R.id.lista_jogadores_list);
-        JogadorAdapter adapter = new JogadorAdapter(this, R.layout.modelo_jogadores, jogadores);
-        lst.setAdapter(adapter);
+        ArrayAdapter<Jogador> adapterJogador = new ArrayAdapter<Jogador>(this, android.R.layout.simple_list_item_multiple_choice, jogadores);
+        lst.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lst.setAdapter(adapterJogador);
+        lst.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SparseBooleanArray checked = lst.getCheckedItemPositions();
+                jogadores.get(position).setSelected(checked.get(position));
+            }
+        });
     }
 
     @Override
@@ -83,8 +93,11 @@ public class ListaJogadoresActivity extends AppCompatActivity {
                 Toast.makeText(this, "Removido", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_selecionar_todos:
-                for(Jogador j : jogadores){
-                    j.setSelected(true);
+                ListView lst = findViewById(R.id.lista_jogadores_list);
+                for(int i=0; i < jogadores.size(); i++){
+                    SparseBooleanArray checked = lst.getCheckedItemPositions();
+                    checked.put(i, true);
+                    jogadores.get(i).setSelected(true);
                 }
             break;
 
@@ -122,7 +135,6 @@ public class ListaJogadoresActivity extends AppCompatActivity {
                         jogadoresSelecionados.add(j);
                     }
                 }
-                //sortearTimes(jogadoresSelecionados);
                 Intent intentQtdJogadorTime = new Intent(ListaJogadoresActivity.this, MainActivity.class);
                 intentQtdJogadorTime.putExtra("jogadoresSelecionados", (Serializable)jogadoresSelecionados);
                 startActivity(intentQtdJogadorTime);

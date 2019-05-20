@@ -3,8 +3,11 @@ package com.example.geradorTimes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +28,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private List<Jogador> jogadores = new ArrayList<Jogador>();
+    private ListView listJogadoresSelecionados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,24 @@ public class MainActivity extends AppCompatActivity {
         btnProximaTela();
         checarBtnOk();
         recuperarListaJogadoresSelecionados();
+        registerForContextMenu(listJogadoresSelecionados);
+    }
+
+    @Override
+    public void onCreateContextMenu(final ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuItem deletar = menu.add("Deletar");
+        deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                AdapterView.AdapterContextMenuInfo info1 = (AdapterView.AdapterContextMenuInfo) menuInfo;
+                Jogador jogador = (Jogador) listJogadoresSelecionados.getItemAtPosition(info1.position);
+                jogadores.remove(jogador);
+                listViewJogadoresSelecionados();
+                Toast.makeText(MainActivity.this,  jogador.toString() + " Removido", Toast.LENGTH_LONG).show();
+                return false;
+            }
+        });
     }
 
     private void btnProximaTela(){
@@ -75,7 +97,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         jogadores = (List<Jogador>) extras.getSerializable("jogadoresSelecionados");
-        ListView listJogadoresSelecionados = findViewById(R.id.main_list_jogadores_selecionados);
+        listViewJogadoresSelecionados();
+    }
+
+    private void listViewJogadoresSelecionados() {
+        listJogadoresSelecionados = findViewById(R.id.main_list_jogadores_selecionados);
         ArrayAdapter<Jogador> adapterJogador = new ArrayAdapter<Jogador>(this, android.R.layout.simple_list_item_1, jogadores);
         listJogadoresSelecionados.setAdapter(adapterJogador);
     }
